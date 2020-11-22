@@ -1,0 +1,186 @@
+$primary: '#050505';
+$secondary: '#2f3037';
+$tertiary: '#525560';
+$quarternary: '#e2e2e2';
+
+.introContainer{
+    margin-top: 4rem;
+    width: 100%;
+    text-align: center;
+    img{
+        max-width: 65%;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  height: 100%;
+  position: relative;
+  color: $primary;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.6rem;
+  background-color: #ffffff;
+  transition: all 0.4s ease;
+}
+
+#app{
+    position: relative;
+    height: 100%;
+}
+
+header{
+    width: 100%;
+    height: 75px;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px;
+    .fastBlockLogo{
+        width: 60px;
+        float: left;
+        img{
+            width: 100%;
+        }
+    }
+
+    .link{
+        cursor: pointer;
+        text-decoration: none;
+        color: $primary;
+        &:hover {
+        text-decoration: underline;
+        }
+    }
+
+    nav{
+        ul{
+            list-style: none;
+            li{
+                margin-left: 10px;
+                display: inline-block;
+            }
+        }
+    }
+
+    .headAvatar{
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        img{
+            width: 100%;
+            min-height: 100%;
+        }
+    }
+}
+
+.flexContainer{
+    display: flex;
+    align-items: center;
+}
+
+.centerText{
+    text-align: center;
+}
+
+.centralContainer{
+    padding-top: 75px;
+}
+
+
+.infoContainer{
+    margin-top: 20px;
+    .infoCardLine{
+        font-size: 1.2em;
+        line-height: 1.5em;
+        color: $secondary;
+    }
+}
+
+.fromCard{
+    min-width: 350px;
+    width: 50%;
+    height: fit-content;
+    padding: 20px;
+    margin: 0 auto;
+    box-shadow: 0 0 2px orange;
+    border-radius: 5px;
+    position: relative;
+    .formHeader{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .formElement{
+        margin-bottom: 5px;
+        label{
+            text-align: center;
+        }
+        input{
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: '1px solid #ccc';
+            border-radius: 5px;
+        }
+    }
+}
+
+.profilAvatar{
+    img{
+        max-height: 200px;
+        max-width: 100%;
+    }
+}
+
+.containerAvatarNav{
+    margin-left: 20px;
+    position: relative;
+    .newMs{
+        position: absolute;
+        background-color: orangered;
+        color: white;
+        top: 0;
+        right: 0;
+        height: 20px;
+        width: 20px;
+        font-size: 10px;
+        line-height: 20px;
+        vertical-align: center;
+        text-align: center;
+        border-radius: 50%;
+    }
+    .nAvatar{
+        position: absolute;
+        z-index: 100;
+        background-color: orange;
+        right: 0;
+        border: 1px solid;
+    }
+}
+
+.talkCard{
+    min-width: 350px;
+    width: 50%;
+    height: fit-content;
+    padding: 20px;
+    margin: 0 auto;
+    box-shadow: 0 0 5px orange;
+    border-radius: 5px;
+    position: relative;
+    .talkNewMs{
+        position: absolute;
+        top: 0;
+        right: 0;
+        
+    }
+}

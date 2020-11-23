@@ -10,7 +10,6 @@ const Register = () => {
     const [message, setMessage] = useState(null);
     const [pseudo, setPseudo] = useState('');
     const [email, setEmail] = useState('');
-    const [avatar, setAvatar] = useState(undefined);
     const [password, setPassword] = useState('');
     const [passConfirm, setPassConfirm] = useState('');
 

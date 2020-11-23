@@ -9,7 +9,6 @@ const Login = () => {
 
     const dispatch = useDispatch();
     const message = useSelector(state => state.auth.authMessage.message);
-    const logged = useSelector(state => state.auth.user.isLogged);
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');

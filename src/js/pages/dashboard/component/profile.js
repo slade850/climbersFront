@@ -1,6 +1,6 @@
 import React,  {useState, useRef}from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import api from '../../../utils/api';
+import {api, servURL }from '../../../utils/api';
 
 const Profile = () => {
 
@@ -35,7 +35,7 @@ const Profile = () => {
         <div className="centralContainer">
         <form className="fromCard" onSubmit={handleSubmit} ref={formRef} >
             <div className="formElement">
-                <label className="profilAvatar"><img src={`http://fastblock.fr:4000/${user.avatar}`} /></label>
+                <label className="profilAvatar"><img src={`${servURL}${user.avatar}`} /></label>
                 <input type="file" onChange={(ev)=> setAvatar(ev.target.files)} name='avatar' />
             </div>
             <button type="submit">Mettre a jour</button><br />

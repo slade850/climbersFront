@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearLogged } from '../utils/local-storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { servURL }from '../../../utils/api';
 
 const Header = () => {
 
@@ -34,7 +35,7 @@ const Header = () => {
             <div className="containerAvatarNav">
             {(nbNewMassages > 0) && <div className="newMs">{nbNewMassages}</div>}
                 <div className="headAvatar">
-                    <img src={`http://localhost:3000/${user.avatar}`} />
+                    <img src={`${servURL}${user.avatar}`} />
                 </div>
                 <nav className="nAvatar">
                 <ul>

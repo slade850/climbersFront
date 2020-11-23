@@ -54,7 +54,6 @@ const App = () => {
 					    <Login />
 				    </Route>
                     <RouteGuard path="/dashboard" component={Dashboard}/>
-                    <RouteGuard path="/dashboard/:args" component={Dashboard}/>
                 </Switch>
         </Router>
         }

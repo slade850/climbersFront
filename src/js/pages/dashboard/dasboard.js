@@ -7,15 +7,17 @@ import {
 import DashboardHome from './component/home';
 import Profile from './component/profile';
 import Messages from './component/messages';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getConversations } from '../../store/messageStore';
+import { getPosts } from '../../store/postStore';
 
 const Dashboard = () => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    useEffect( () => {
         dispatch(getConversations())
+        dispatch(getPosts())
     }, [])
 
     return (

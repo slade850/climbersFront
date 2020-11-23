@@ -1,7 +1,9 @@
-$primary: '#050505';
-$secondary: '#2f3037';
-$tertiary: '#525560';
-$quarternary: '#e2e2e2';
+@import 'grid';
+@import 'card';
+$primary: #050505;
+$secondary: #2f3037;
+$tertiary: #525560;
+$quarternary: #e2e2e2;
 
 .introContainer{
     margin-top: 4rem;
@@ -96,6 +98,16 @@ header{
     padding-top: 75px;
 }
 
+.litleRoundedAvatar{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    img{
+        width: 100%;
+        min-height: 100%;
+    }
+}
 
 .infoContainer{
     margin-top: 20px;

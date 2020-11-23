@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearLogged } from '../utils/local-storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { servURL }from '../../../utils/api';
+import { servURL } from '../utils/api';
 
 const Header = () => {
 

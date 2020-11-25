@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearLogged } from '../utils/local-storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import { servURL } from '../utils/api';
 
 const Header = () => {
@@ -31,22 +32,22 @@ const Header = () => {
             </nav>
             :
             <div className="flexContainer">
-                <Link className="link" to="/dashboard" ><FontAwesomeIcon icon={faHome} size="2x" color="orange"/></Link>
+                <Link className="link" to="/dashboard" ><FontAwesomeIcon icon={faHome} size="2x" color="#FF8203"/></Link>
             <div className="containerAvatarNav">
             {(nbNewMassages > 0) && <div className="newMs">{nbNewMassages}</div>}
                 <div className="headAvatar">
                     <img src={`${servURL}${user.avatar}`} />
                 </div>
                 <nav className="nAvatar">
-                <ul>
-                    <li>
-                        <Link className="link" to="/dashboard/profile">Profile</Link>
+                <ul className="nAvatarList">
+                    <li className="linkColor">
+                        <Link className="link" to="/dashboard/profile"><FontAwesomeIcon className="linkIco" icon={faUserCircle} size="2x" /></Link>
                     </li>
-                    <li>
-                        <Link className="link" to="/dashboard/messages">Messages</Link>
+                    <li className="linkColor">
+                        <Link className="link" to="/dashboard/messages"><FontAwesomeIcon className="linkIco" icon={faEnvelope} size="2x" /></Link>
                     </li>
-                    <li>
-                        <span className="link" onClick={() => { dispatch({type: "CLEAR_USER"}); clearLogged() }}>Deconnexion</span>
+                    <li className="linkColor">
+                        <span className="link" onClick={() => { dispatch({type: "CLEAR_USER"}); clearLogged() }}><FontAwesomeIcon className="linkIco" icon={faPowerOff} size="2x" /></span>
                     </li>
                 </ul>
             </nav>

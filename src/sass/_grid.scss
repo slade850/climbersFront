@@ -1,0 +1,97 @@
+$columns: 12!default;
+
+
+@mixin gridItems($screenType: 'cols'){
+    @for $i from 1 through $columns{
+        .#{$screenType}-#{$i}{
+        width: $i / $columns * 100%;
+        min-height: 1px;
+        padding: 0 10px;
+        img{
+            width: 100%;
+        }
+        }
+    }
+};
+
+@mixin rowItems($screenType: 'splitrow'){
+    @for $i from 1 through $columns{
+        .#{$screenType}-#{$i}{
+        width: $i / $columns * 100%;
+        position: relative;
+        display: flex;
+        display: -ms-flexbox;
+        flex-wrap: wrap;
+        overflow: hidden;
+        }
+    }
+}
+
+@mixin flexPosition($screenType: ''){
+    .flexCenter#{$screenType}{
+        justify-content: center;
+    }
+    .flexAround#{$screenType}{
+        justify-content: space-around;
+    }
+    .flexBetween#{$screenType}{
+        justify-content: space-between;
+    }
+    .flexEvenly#{$screenType}{
+        justify-content: space-evenly;
+    }
+    .flexEnd#{$screenType}{
+        justify-content: flex-end;
+    }
+    .flexStart#{$screenType}{
+        justify-content: flex-start;
+    }
+    .flexVaCenter#{$screenType}{
+        align-items: center;
+    }
+    .flexVaEnd#{$screenType}{
+        align-items: flex-end;
+    }
+    .flexVaStart#{$screenType}{
+        align-items: flex-start;
+    }
+    .selfStart#{$screenType}{
+        justify-self: start;
+        margin-left: 0;
+        margin-right: auto;
+    }
+    .selfEnd#{$screenType}{
+        justify-self: end;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+}
+
+
+@include gridItems();
+
+@include rowItems();
+
+@include flexPosition();
+
+.rows{
+    position: relative;
+    display: flex;
+    display: -ms-flexbox;
+    flex-wrap: wrap;
+}
+
+
+
+@media only screen and (min-width: 640px) {
+    @include gridItems('csm');
+    @include rowItems('splitrowM');
+    @include flexPosition('M');
+};
+
+@media only screen and (min-width: 1080px) {
+    @include gridItems('csl');
+    @include rowItems('splitrowL');
+    @include flexPosition('L');
+};

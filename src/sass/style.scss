@@ -1,9 +1,6 @@
+@import 'varAndGlobal';
 @import 'grid';
 @import 'card';
-$primary: #050505;
-$secondary: #2f3037;
-$tertiary: #525560;
-$quarternary: #e2e2e2;
 
 .introContainer{
     margin-top: 4rem;
@@ -19,15 +16,13 @@ $quarternary: #e2e2e2;
     padding: 0;
     box-sizing: border-box;
 }
-html {
-  font-size: 62.5%;
-}
+
 body {
   height: 100%;
   position: relative;
-  color: $primary;
+  color: $raisinBlack;
   font-family: 'Roboto', sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   background-color: #ffffff;
   transition: all 0.4s ease;
 }
@@ -46,20 +41,12 @@ header{
     justify-content: space-between;
     align-items: center;
     border-bottom: solid 1px;
+    box-shadow: 0 2px 2px $dimGrey;
     .fastBlockLogo{
         width: 60px;
         float: left;
         img{
             width: 100%;
-        }
-    }
-
-    .link{
-        cursor: pointer;
-        text-decoration: none;
-        color: $primary;
-        &:hover {
-        text-decoration: underline;
         }
     }
 
@@ -114,7 +101,7 @@ header{
     .infoCardLine{
         font-size: 1.2em;
         line-height: 1.5em;
-        color: $secondary;
+        color: $raisinBlack;
     }
 }
 
@@ -124,9 +111,41 @@ header{
     height: fit-content;
     padding: 20px;
     margin: 0 auto;
-    box-shadow: 0 0 2px orange;
+    box-shadow: 0 0 2px $primOrange;
     border-radius: 5px;
     position: relative;
+    .formHeader{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .formElement{
+        margin-bottom: 5px;
+        label{
+            text-align: center;
+        }
+        input{
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: '1px solid #ccc';
+            border-radius: 5px;
+        }
+    }
+}
+
+.fromCardPop{
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $white;
+    min-width: 350px;
+    width: 60%;
+    padding: 20px;
+    box-shadow: 1px 2px 5px $primOrange;
+    border-radius: 5px;
     .formHeader{
         text-align: center;
         margin-bottom: 20px;
@@ -159,8 +178,8 @@ header{
     position: relative;
     .newMs{
         position: absolute;
-        background-color: orangered;
-        color: white;
+        background-color: #f50025;
+        color: $white;
         top: 0;
         right: 0;
         height: 20px;
@@ -173,26 +192,28 @@ header{
     }
     .nAvatar{
         position: absolute;
+        overflow: hidden;
+        height: 0;
         z-index: 100;
-        background-color: orange;
+        background-color: $white;
         right: 0;
-        border: 1px solid;
+        box-shadow: 0 0 2px $dimGrey;
+        border-radius: 30px;
+        .nAvatarList{
+            margin: 0 auto;
+            text-align: center;
+            li{
+                margin: 0;
+                width: 60px;
+            }
+        }
     }
+    &:hover{
+        .nAvatar{
+            height: 180px;
+            animation: downBounce 600ms;
+        }
+    }
+
 }
 
-.talkCard{
-    min-width: 350px;
-    width: 50%;
-    height: fit-content;
-    padding: 20px;
-    margin: 0 auto;
-    box-shadow: 0 0 5px orange;
-    border-radius: 5px;
-    position: relative;
-    .talkNewMs{
-        position: absolute;
-        top: 0;
-        right: 0;
-        
-    }
-}

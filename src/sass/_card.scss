@@ -1,10 +1,9 @@
 .card {
     min-width: 350px;
-    width: 50%;
+    width: 60%;
     height: fit-content;
-    padding: 20px;
-    margin: 0 auto;
-    box-shadow: 0 0 3px orange;
+    margin: 20px auto;
+    box-shadow: 0 0 3px $dimGrey;
     border-radius: 5px;
     position: relative;
 }

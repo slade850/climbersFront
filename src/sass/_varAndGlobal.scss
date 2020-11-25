@@ -1,0 +1,98 @@
+$primOrange: #FF8203;
+$white:#FBFFFE;
+$raisinBlack: #1B1B1E;
+$dimGrey: #6d676e;
+$taupGrey: #8c8a93;
+$redP: #F50025;
+$cyan: #08B2E3;
+
+@keyframes downBounce {
+    0% {
+        height: 0; 
+    }
+    30%{
+        height: 300%;
+    }
+    45%{
+        height: 150%;
+    }
+    65%{
+        height: 300%;
+    }
+    80%{
+        height: 250%;
+    }
+    100%{
+        height: 300%;
+    }
+}
+
+.link{
+    cursor: pointer;
+    text-decoration: none;
+    color: $raisinBlack;
+    &:hover {
+    text-decoration: underline;
+    }
+}
+
+
+
+.linkIco{
+    transition: color 300ms ease-in-out;
+    position: relative;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    color: $primOrange;
+    &:hover{
+        color: $cyan;
+    }
+}
+
+.likeIco{
+    color: $cyan;
+}
+
+.loveIco{
+    color: $redP;
+}
+
+.openPopForm{
+    margin-right: 20px;
+    margin-left: auto;
+    min-width: 60px;
+    width: 60px;
+    height: 60px;
+    .popIco{
+        color: $primOrange;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.postHeader{
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 2px $dimGrey;
+}
+
+.postBody{
+    margin-bottom: 20px;
+    border-bottom: 1px solid $dimGrey;
+}
+
+.mediasContainer{
+    display: flex;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    .mediaBlock{
+        min-width: 300px;
+        width: 30%;
+        img{
+            width: 100%;
+        }
+    }
+}
+

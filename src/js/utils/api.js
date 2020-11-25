@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-export const servURL = 'http://localhost:3000/'
+export const servURL = 'https://fastblock.fr/'
 //config axios for work with cookies
 axios.defaults.withCredentials = true;
 //init an instance with url of api
 const instance = axios.create({
-    baseURL: 'http://localhost:3000/api/'
+    baseURL: 'https://fastblock.fr/api/'
 })
 
 

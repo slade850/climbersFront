@@ -13,17 +13,22 @@ import Register from './pages/register';
 import Login from './pages/login';
 import Dashboard from './pages/dashboard/dasboard';
 
-import api from './utils/api';
-import { getStorageLogged, clearLogged } from './utils/local-storage'
+import api, { servURL } from './utils/api';
+import { getStorageLogged, clearLogged } from './utils/local-storage';
+import ResetPassword from './pages/resetPassword';
+
 
 const App = () => {
 
     const dispatch = useDispatch();
     const [appRun, setAppRun] = useState(false);
+    const [response, setResponse] = useState("");
 
     useEffect(() => {
-        getStorageLogged() ? api.get('user/info')
-            .then(res => dispatch({type: 'SET_USER', payload: res.data.user}))
+        getStorageLogged() ? api.get('user/me')
+            .then(res => {
+                dispatch({type: 'SET_USER', payload: res.data.user})
+            })
             .catch(err => {
                 dispatch({type: 'SET_USER_LOGGED', payload: false});
                 clearLogged();
@@ -45,10 +50,13 @@ const App = () => {
             <Header />
                 <Switch>
                     <Route exact path="/">
-                        <Home />
+                        <Home res={response} />
                     </Route>
                     <Route path="/register">
 					    <Register />
+				    </Route>
+                    <Route path="/reset-password/:token">
+					    <ResetPassword />
 				    </Route>
                     <Route path="/login">
 					    <Login />

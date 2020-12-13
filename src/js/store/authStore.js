@@ -25,12 +25,14 @@ export const doLogin = (body) => {
 
 const defaultUserState = {
     isLogged: false,
+    ioId: '',
     detail: {},
 }
 
 const user = (state = defaultUserState, action) => {
     const userAction = {
         "SET_USER": {...state, isLogged: true, detail: action.payload},
+        "SET_IO_ID": {...state, ioId: action.payload},
         "SET_USER_LOGGED": {...state, isLogged: action.payload},
         "CLEAR_USER": defaultUserState
     }

@@ -1,9 +1,11 @@
 import React, { useState, useRef }from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import api, { servURL } from '../../../utils/api';
+import api from '../../../utils/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faHeart, faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { getPosts } from '../../../store/postStore';
+import config from '../../../../config';
+import io from '../../../utils/socket';
 
 const DashboardHome = () => {
 
@@ -45,7 +47,7 @@ const DashboardHome = () => {
                         <div className="postHeader">
                             <h2>{post.title}</h2>
                             <div className="litleRoundedAvatar">
-                                {post.avatar && <img src={`${servURL}${post.avatar}`} />}
+                                {post.avatar && <img src={`${config.SERVE_URL}${post.avatar}`} />}
                             </div>
                             <h3>{post.pseudo}</h3>
                         </div>
@@ -55,9 +57,9 @@ const DashboardHome = () => {
                                 post.medias.map((media) => {
                                 return (<div key={media.id.split('-')[0]} className="mediaBlock">
                                 {    
-                                media.type == 'doc' ? <a href={`${servURL}${media.path}`} target="_blank">{media.path.split('/')[1]}</a>
+                                media.type == 'doc' ? <a href={`${config.SERVE_URL}${media.path}`} target="_blank">{media.path.split('/')[1]}</a>
                                         :
-                                media.type == 'image' ? <img src={`${servURL}${media.path}`} /> :  <video width="200" height="200" src={`${servURL}${media.path}`} controls> Your browser does not support the video tag.</video> 
+                                media.type == 'image' ? <img src={`${config.SERVE_URL}${media.path}`} /> :  <video width="200" height="200" src={`${config.SERVE_URL}${media.path}`} controls> Your browser does not support the video tag.</video> 
                                 }
                                 </div>)
                                 })}
@@ -83,7 +85,7 @@ const DashboardHome = () => {
                                 return (<div key={comment.id.split('-')[0]} className="commentCard">
                                             <div className="commentHeader">
                                                 <div className="litleRoundedAvatar">
-                                                    <img src={`${servURL}${comment.avatar}`} />
+                                                    <img src={`${config.SERVE_URL}${comment.avatar}`} />
                                                 </div>
                                                 <h4>{comment.pseudo}</h4>
                                             </div>
@@ -118,7 +120,7 @@ const DashboardHome = () => {
                 </div>
                 <div className="formElement">
                     <label>Text</label>
-                    <input type="text" onChange={(ev)=> setText(ev.target.value)} minLength="8" name='text' value={text} required />
+                    <input type="richtext" onChange={(ev)=> setText(ev.target.value)} name='text' value={text}></input>
                 </div>
                 <button type="submit">Envoyer</button><br />
             </form>

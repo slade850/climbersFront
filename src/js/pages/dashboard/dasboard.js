@@ -10,6 +10,8 @@ import Messages from './component/messages';
 import { useDispatch } from 'react-redux';
 import { getConversations } from '../../store/messageStore';
 import { getPosts } from '../../store/postStore';
+import MessagesFrom from './component/messageFrom';
+import io from '../../utils/socket';
 
 const Dashboard = () => {
 
@@ -18,6 +20,13 @@ const Dashboard = () => {
     useEffect( () => {
         dispatch(getConversations())
         dispatch(getPosts())
+        io.on("connect", () => {
+            console.log(io.id);
+            dispatch({type: 'SET_IO_ID', payload: io.id}) 
+        });
+        io.on('event', (data) => {
+            console.log(data);
+        })
     }, [])
 
     return (
@@ -31,8 +40,11 @@ const Dashboard = () => {
                 <Route path="/dashboard/profile">
                     <Profile />
                 </Route>
-                <Route path="/dashboard/messages">
+                <Route exact path="/dashboard/messages">
                     <Messages />
+                </Route>
+                <Route path="/dashboard/messages/:id">
+                    <MessagesFrom />
                 </Route>
             </Switch>
             )

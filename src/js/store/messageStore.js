@@ -28,10 +28,9 @@ export const getTalkFrom = (contactId) => {
         dispatch({ type: "GET_TALK_FROM" })
 
         return api
-            .get(`private_message/${contactId}`)
+            .get(`private_message/from/${contactId}`)
                 .then(response => {
-                    console.log(response.data)
-                    dispatch({type: 'SET_MESSAGES_FROM', payload: { [contactId]: response.data} })
+                    dispatch({type: 'SET_MESSAGES_FROM', payload: { [contactId]: response.data.data } })
                     })
                 .catch(err => {
                     dispatch({ type: "SET_MESSAGES_FROM_ERROR", payload: err.response.data.message })

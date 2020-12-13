@@ -5,7 +5,7 @@ import { clearLogged } from '../utils/local-storage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope, faUserCircle } from '@fortawesome/free-regular-svg-icons';
-import { servURL } from '../utils/api';
+import config from '../../config';
 
 const Header = () => {
 
@@ -36,7 +36,7 @@ const Header = () => {
             <div className="containerAvatarNav">
             {(nbNewMassages > 0) && <div className="newMs">{nbNewMassages}</div>}
                 <div className="headAvatar">
-                    <img src={`${servURL}${user.avatar}`} />
+                    <img src={`${config.SERVE_URL}${user.avatar}`} />
                 </div>
                 <nav className="nAvatar">
                 <ul className="nAvatarList">

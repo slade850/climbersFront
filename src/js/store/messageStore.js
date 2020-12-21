@@ -6,7 +6,7 @@ export const getConversations = () => {
         dispatch({ type: "GET_CONVERSATIONS" })
 
         return api
-            .get('private_message')
+            .get('private-message')
                 .then(response => {
                     const data = response.data.data;
                     dispatch({type: 'SET_USERS_TALKS', payload: data})
@@ -28,7 +28,7 @@ export const getTalkFrom = (contactId) => {
         dispatch({ type: "GET_TALK_FROM" })
 
         return api
-            .get(`private_message/from/${contactId}`)
+            .get(`private-message/from/${contactId}`)
                 .then(response => {
                     dispatch({type: 'SET_MESSAGES_FROM', payload: { [contactId]: response.data.data } })
                     })

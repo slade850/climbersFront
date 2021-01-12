@@ -32,6 +32,7 @@ const defaultUserState = {
 const user = (state = defaultUserState, action) => {
     const userAction = {
         "SET_USER": {...state, isLogged: true, detail: action.payload},
+        "SET_SOCKETOKEN": {...state, sockeToken: action.payload},
         "SET_IO_ID": {...state, ioId: action.payload},
         "SET_USER_LOGGED": {...state, isLogged: action.payload},
         "CLEAR_USER": defaultUserState

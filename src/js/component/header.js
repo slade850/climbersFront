@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearLogged } from '../utils/local-storage';
@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope, faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import config from '../../config';
+import io from '../utils/socket';
 
 const Header = () => {
 

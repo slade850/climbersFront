@@ -28,6 +28,7 @@ const App = () => {
         getStorageLogged() ? api.get('user/me')
             .then(res => {
                 dispatch({type: 'SET_USER', payload: res.data.user})
+                dispatch({type: 'SET_SOCKETOKEN', payload: res.data.sockeToken})
             })
             .catch(err => {
                 dispatch({type: 'SET_USER_LOGGED', payload: false});

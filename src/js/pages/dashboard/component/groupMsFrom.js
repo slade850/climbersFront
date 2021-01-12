@@ -3,36 +3,35 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import api from '../../../utils/api';
 import { getConversations } from '../../../store/messageStore';
-import { getTalkFrom }from '../../../store/messageStore';
+import { getTalkGroupFrom }from '../../../store/messageStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../../config';
 import io from '../../../utils/socket';
 
-const MessagesFrom = () => {
+const GroupMsFrom = () => {
 
     let { slug } = useParams();
     const dispatch = useDispatch();
     const formRef = useRef();
-    const [msLoding, setMsLoding] = useState(false)
+    const [msLoding, setMsLoding] = useState(false);
     const [errorMs, setErrorMs] = useState(null);
-    const allMessages = useSelector(state => state.message.messagesFrom.from[slug]);
-    const contactId = useSelector(state => state.message.messagesFrom.currentId);
+    const allMessages = useSelector(state => state.message.messagesFrom.group[slug]);
+    const groupId = useSelector(state => state.message.messagesFrom.currentGroupId);
     const user = useSelector(state => state.auth.user.detail);
     const [msg, setMsg] = useState('');
 
 
     useEffect( () => {
-        dispatch(getTalkFrom(slug))
+        dispatch(getTalkGroupFrom(slug))
         .then(()=> dispatch(getConversations()))
         .catch(err => setErrorMs(err))
         .finally(() => {
             setMsLoding(true);
         })
         io.on('nvMs', (data) => {
-            let {sender, receiver} = data;
-            if(sender == user.id || receiver == user.id){
-                dispatch(getTalkFrom(slug))
+            if(data.group == groupId){
+                dispatch(getTalkGroupFrom(slug))
                 .then(()=> dispatch(getConversations()))
                 .catch(err => setErrorMs(err))
             }
@@ -42,10 +41,9 @@ const MessagesFrom = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(formRef.current);
-        api.post('private-message/create',  data, {headers: { 'content-type': 'multipart/form-data' }})
+        api.post('group-message/create',  data, {headers: { 'content-type': 'multipart/form-data' }})
         .then(res => {
             setMsg('');
-            event.target.reset();
         })
         .catch(err => console.log(err))
     }
@@ -56,12 +54,12 @@ const MessagesFrom = () => {
                 msLoding ?
                 allMessages && allMessages.length > 0 &&
                 allMessages.map((message) => {
-                    return (<div key={message.id} className={message.sender == user.id ? "messageSent" : "messageReceived"}>
+                    return (<div key={message.id} className={message.author == user.id ? "messageSent" : "messageReceived"}>
                         <p>{message.created_at}</p>
                         <div className="message">
                             {message.message}
                         </div>
-                            {
+                        {
                                 message.medias && message.medias.length > 0 ? (<div className="mediasContainer">{
                                 message.medias.map((media) => {
                                 return (<div key={media.id.split('-')[0]} className="mediaBlock">
@@ -82,9 +80,10 @@ const MessagesFrom = () => {
                 </div>
             }
             <form className="fromMessager" onSubmit={handleSubmit} ref={formRef} >
-                <input type="hidden" name="receiver" value={contactId}/>
+                <input type="hidden" name="group_id" value={groupId}/>
                 <div className="formElement">
-                    <textarea className="zoneMsg" onChange={(ev)=> setMsg(ev.target.value)} name='message' rows="5" resize="false" value={msg}>
+                    <textarea className="zoneMsg" onChange={(ev)=> setMsg(ev.target.value)} name='message' rows="5" resize="false">
+                        {msg}
                     </textarea>
                 </div>
                 <div className="bottomBar">
@@ -96,4 +95,4 @@ const MessagesFrom = () => {
         </div>
             )
 }
-export default MessagesFrom;
+export default GroupMsFrom;

@@ -8,13 +8,19 @@ export const getConversations = () => {
         return api
             .get('private-message')
                 .then(response => {
-                    const data = response.data.data;
-                    dispatch({type: 'SET_USERS_TALKS', payload: data})
-                    if(data.length){
-                        let nbNewMs = data.length > 1 ? data.reduce((a , c) => a + c.new_messages , 0) : data[0].new_messages;
-                        console.log(nbNewMs);
-                        dispatch({type: 'SET_TOTAL_NEW_MESSAGE', payload: nbNewMs})
+                    console.log(response);
+                    let totalNewMs = 0;
+                    const userMsg = response.data.userMsg;
+                    const groupMsg = response.data.groupMsg;
+                    if(userMsg.length){
+                        dispatch({type: 'SET_USERS_TALKS', payload: userMsg});
+                        totalNewMs += userMsg.length > 1 ? userMsg.reduce((a , c) => a + c.new_messages , 0) : userMsg[0].new_messages;
                     }
+                    if(groupMsg.length){
+                        dispatch({type: 'SET_USERS_TALKS_GROUP', payload: groupMsg});
+                        totalNewMs += groupMsg.length > 1 ? groupMsg.reduce((a , c) => a + c.new_messages , 0) : groupMsg[0].new_messages;
+                    }
+                    dispatch({type: 'SET_TOTAL_NEW_MESSAGE', payload: totalNewMs})
                     })
                 .catch(err => {
                     dispatch({ type: "SET_USERS_TALK_ERROR", payload: err.message })
@@ -23,14 +29,32 @@ export const getConversations = () => {
     }
 }
 
-export const getTalkFrom = (contactId) => {
+export const getTalkFrom = (contactSlug) => {
     return dispatch => {
         dispatch({ type: "GET_TALK_FROM" })
 
         return api
-            .get(`private-message/from/${contactId}`)
+            .get(`private-message/from/${contactSlug}`)
                 .then(response => {
-                    dispatch({type: 'SET_MESSAGES_FROM', payload: { [contactId]: response.data.data } })
+                    dispatch({type: 'SET_MESSAGES_FROM', payload: { [contactSlug]: response.data.data } })
+                    dispatch({type: 'SET_MESSAGES_FROM_ID', payload: response.data.contactId })
+                    })
+                .catch(err => {
+                    dispatch({ type: "SET_MESSAGES_FROM_ERROR", payload: err.response.data.message })
+                })
+                .finally(res => setTimeout(() => { dispatch({type: "CLEAR_MESSAGES_FROM_ERROR"})}, 2000) )
+    }
+}
+
+export const getTalkGroupFrom = (groupSlug) => {
+    return dispatch => {
+        dispatch({ type: "GET_TALK_GROUP_FROM" })
+
+        return api
+            .get(`group-message/from/${groupSlug}`)
+                .then(response => {
+                    dispatch({type: 'SET_MESSAGES_GROUP_FROM', payload: { [groupSlug]: response.data.data } })
+                    dispatch({type: 'SET_MESSAGES_GROUP_FROM_ID', payload: response.data.groupId })
                     })
                 .catch(err => {
                     dispatch({ type: "SET_MESSAGES_FROM_ERROR", payload: err.response.data.message })
@@ -42,12 +66,14 @@ export const getTalkFrom = (contactId) => {
 const defaultUsersTalk = {
     error: null,
     totalNewMessages: 0,
-    talks: []
+    talks: [],
+    groups: []
 }
 
 const usersTalk = (state = defaultUsersTalk, action) => {
     const usersTalkAction = {
         "SET_USERS_TALKS": {...state, talks: action.payload},
+        "SET_USERS_TALKS_GROUP": {...state, groups: action.payload},
         "SET_TOTAL_NEW_MESSAGE": {...state, totalNewMessages: action.payload},
         "SET_USERS_TALK_ERROR": {...state, error: action.payload},
         "CLEAR_USERS_TALK_ERROR": {...state, error: null},
@@ -58,12 +84,18 @@ const usersTalk = (state = defaultUsersTalk, action) => {
 
 const defaultMessagesFrom = {
     error: null,
-    from: {}
+    from: {},
+    group: {},
+    currentId: '',
+    currentGroupId: ''
 }
 
 const messagesFrom = (state = defaultMessagesFrom, action) => {
     const messagesFromAction = {
         "SET_MESSAGES_FROM": {...state, from: action.payload },
+        "SET_MESSAGES_FROM_ID": {...state, currentId: action.payload },
+        "SET_MESSAGES_GROUP_FROM": {...state, group: action.payload },
+        "SET_MESSAGES_GROUP_FROM_ID": {...state, currentGroupId: action.payload },
         "SET_MESSAGES_FROM_ERROR": {...state, error: action.payload},
         "CLEAR_MESSAGES_FROM_ERROR": {...state, error: null},
         "CLEAR_MESSAGES_FROM": defaultMessagesFrom
@@ -75,6 +107,7 @@ const messageFuntion = (state = false, action) => {
     const messageFuntionAction = {
         "GET_CONVERSATIONS": true,
         "GET_TALK_FROM": true,
+        "GET_TALK_GROUP_FROM": true,
     }
     return messageFuntionAction[action.type] || state;
 }

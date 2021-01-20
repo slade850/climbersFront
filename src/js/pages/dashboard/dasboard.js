@@ -30,6 +30,7 @@ const Dashboard = () => {
         io.on("connect", () => {
             dispatch({type: 'SET_IO_ID', payload: io.id}) 
         });
+        io.on('nvPost', (data) => dispatch(getPosts()))
         io.on('nvMs', (data) => {
             if(('receiver' in data && data.receiver == user.id) || 'group' in data){
                 dispatch(getConversations())

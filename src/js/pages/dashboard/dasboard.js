@@ -8,11 +8,14 @@ import DashboardHome from './component/home';
 import Profile from './component/profile';
 import Messages from './component/messages';
 import { useDispatch, useSelector } from 'react-redux';
-import { getConversations } from '../../store/messageStore';
+import { getConversations, getInvitations } from '../../store/messageStore';
 import { getPosts } from '../../store/postStore';
+import { getContact } from '../../store/contactStore';
 import MessagesFrom from './component/messageFrom';
 import GroupMsFrom from './component/groupMsFrom';
 import io from '../../utils/socket';
+import SearchList from './component/searchList';
+import ViewProfile from './component/viewProfile';
 
 const Dashboard = () => {
 
@@ -20,7 +23,9 @@ const Dashboard = () => {
     const user = useSelector(state => state.auth.user.detail);
 
     useEffect( () => {
+        dispatch(getContact())
         dispatch(getConversations())
+        dispatch(getInvitations())
         dispatch(getPosts())
         io.on("connect", () => {
             dispatch({type: 'SET_IO_ID', payload: io.id}) 
@@ -33,6 +38,7 @@ const Dashboard = () => {
     }, [])
 
     return (
+        <div className="rows flexCenter">
             <Switch>
                 <Route exact path="/dashboard">
                     <Redirect to="/dashboard/home" />
@@ -40,7 +46,7 @@ const Dashboard = () => {
                 <Route path="/dashboard/home">
                     <DashboardHome />
                 </Route>
-                <Route path="/dashboard/profile">
+                <Route path="/dashboard/me">
                     <Profile />
                 </Route>
                 <Route exact path="/dashboard/messages">
@@ -49,10 +55,17 @@ const Dashboard = () => {
                 <Route path="/dashboard/messages/:slug">
                     <MessagesFrom />
                 </Route>
+                <Route path="/dashboard/search">
+                    <SearchList />
+                </Route>
+                <Route path="/dashboard/view/:slug">
+                    <ViewProfile />
+                </Route>
                 <Route path="/dashboard/goup-messages/:slug">
                     <GroupMsFrom />
                 </Route>
             </Switch>
+        </div>
             )
 }
 

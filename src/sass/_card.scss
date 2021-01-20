@@ -7,3 +7,19 @@
     border-radius: 5px;
     position: relative;
 }
+
+.usrCard{
+    width: 300px;
+    display: flex;
+    .usrAvatar{
+        margin: 10px;
+        width: 60px;
+        height: 60px;
+        img{
+            width: 100%;
+        }
+    }
+    .usrName{
+        padding: 5px;
+    }
+}

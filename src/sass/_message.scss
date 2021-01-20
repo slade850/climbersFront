@@ -1,0 +1,50 @@
+
+
+.talkCard{
+    position: relative;
+    text-align: center;
+    width: 130px;
+    margin-bottom: 30px;
+    .talkAvatar{
+        margin: 0 auto;
+        overflow: hidden;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        text-align: center;
+        img{
+            height: 100%;
+            width: auto;
+        }
+    }
+    .talkNewMs{
+        position: absolute;
+        top: 0px;
+        right: 30px;
+        height: 22px;
+        width: 22px;
+        border-radius: 50%;
+        background-color: $redP;
+    }
+}
+
+.messageSent{
+    margin-bottom: 5px;
+    padding: 5px;
+    width: 60%;
+    background-color: orange;
+    margin-left: 0;
+    margin-right: auto;
+    border-bottom-right-radius: 20px;
+}
+
+.messageReceived{
+    text-align: right;
+    margin-bottom: 5px;
+    padding: 5px;
+    width: 60%;
+    background-color: $cyan;
+    margin-right: O;
+    margin-left: auto;
+    border-bottom-left-radius: 20px;
+}

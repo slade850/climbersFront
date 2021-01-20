@@ -21,14 +21,13 @@ const MessagesFrom = () => {
     const user = useSelector(state => state.auth.user.detail);
     const [msg, setMsg] = useState('');
 
-
-    useEffect( () => {
+    useEffect(() => {
         dispatch(getTalkFrom(slug))
         .then(()=> dispatch(getConversations()))
         .catch(err => setErrorMs(err))
         .finally(() => {
             setMsLoding(true);
-        })
+        });
         io.on('nvMs', (data) => {
             let {sender, receiver} = data;
             if(sender == user.id || receiver == user.id){
@@ -37,7 +36,10 @@ const MessagesFrom = () => {
                 .catch(err => setErrorMs(err))
             }
         })
-    }, [])
+        return () => {
+            return 'by'
+        }
+    },[]);
     
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -51,7 +53,7 @@ const MessagesFrom = () => {
     }
 
     return (
-        <div className="centralContainer">
+        <div className="centralContainer cols-10">
             {
                 msLoding ?
                 allMessages && allMessages.length > 0 &&
@@ -81,7 +83,7 @@ const MessagesFrom = () => {
                     loading
                 </div>
             }
-            <form className="fromMessager" onSubmit={handleSubmit} ref={formRef} >
+            <form className="fromMessager cols-11" onSubmit={handleSubmit} ref={formRef} >
                 <input type="hidden" name="receiver" value={contactId}/>
                 <div className="formElement">
                     <textarea className="zoneMsg" onChange={(ev)=> setMsg(ev.target.value)} name='message' rows="5" resize="false" value={msg}>

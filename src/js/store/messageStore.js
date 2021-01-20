@@ -8,7 +8,6 @@ export const getConversations = () => {
         return api
             .get('private-message')
                 .then(response => {
-                    console.log(response);
                     let totalNewMs = 0;
                     const userMsg = response.data.userMsg;
                     const groupMsg = response.data.groupMsg;
@@ -26,6 +25,29 @@ export const getConversations = () => {
                     dispatch({ type: "SET_USERS_TALK_ERROR", payload: err.message })
                 })
                 .finally(res => setTimeout(() => { dispatch({type: "CLEAR_USERS_TALK_ERROR"})}, 2000) )
+    }
+}
+
+export const getInvitations = () => {
+    return dispatch => {
+        dispatch({ type: "GET_INVITATIONS" })
+
+        return api
+            .get('private-message/invitation')
+                .then(response => {
+                    console.log(response);
+                    let totalNewIv = 0;
+                    const invitations = response.data.data;
+                    if(invitations.length){
+                        dispatch({type: 'SET_USERS_INVITATIONS', payload: invitations});
+                        totalNewIv += invitations.reduce((a , c) => a + 1 , 0);
+                    }
+                    dispatch({type: 'SET_TOTAL_INVITATIONS', payload: totalNewIv})
+                    })
+                .catch(err => {
+                    dispatch({ type: "SET_USERS_INVITATIONS_ERROR", payload: err.message })
+                })
+                .finally(res => setTimeout(() => { dispatch({type: "CLEAR_USERS_INVITATIONS_ERROR"})}, 2000) )
     }
 }
 
@@ -67,7 +89,7 @@ const defaultUsersTalk = {
     error: null,
     totalNewMessages: 0,
     talks: [],
-    groups: []
+    groups: [],
 }
 
 const usersTalk = (state = defaultUsersTalk, action) => {
@@ -80,6 +102,23 @@ const usersTalk = (state = defaultUsersTalk, action) => {
         "CLEAR_USERS_TALKS": defaultUsersTalk
     }
     return usersTalkAction[action.type] || state;
+}
+
+const defaultInvitation = {
+    totalInvitations: 0,
+    invitations: [],
+    error: null
+}
+
+const usersInvitation = (state = defaultInvitation, action) => {
+    const usersInvitAction = {
+        "SET_USERS_INVITATIONS": {...state, invitations: action.payload},
+        'SET_TOTAL_INVITATIONS': {...state, totalInvitations: action.payload},
+        "SET_USERS_INVITATIONS_ERROR": {...state, error: action.payload},
+        "CLEAR_USERS_INVITATIONS_ERROR": {...state, error: null},
+        "CLEAR_USERS_INVITATIONS": defaultInvitation
+    }
+    return usersInvitAction[action.type] || state;
 }
 
 const defaultMessagesFrom = {
@@ -108,6 +147,7 @@ const messageFuntion = (state = false, action) => {
         "GET_CONVERSATIONS": true,
         "GET_TALK_FROM": true,
         "GET_TALK_GROUP_FROM": true,
+        "GET_INVITATIONS": true
     }
     return messageFuntionAction[action.type] || state;
 }
@@ -116,6 +156,7 @@ const messageFuntion = (state = false, action) => {
 
 const messageReducer = combineReducers({
     usersTalk,
+    usersInvitation,
     messagesFrom,
     messageFuntion
 });

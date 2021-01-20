@@ -29,13 +29,16 @@ const GroupMsFrom = () => {
         .finally(() => {
             setMsLoding(true);
         })
-        io.on('nvMs', (data) => {
+        io.on('nvGm', (data) => {
             if(data.group == groupId){
                 dispatch(getTalkGroupFrom(slug))
                 .then(()=> dispatch(getConversations()))
                 .catch(err => setErrorMs(err))
             }
         })
+        return () => {
+            io.off('nvGm')
+        }
     }, [])
     
     const handleSubmit = (event) => {
@@ -44,6 +47,7 @@ const GroupMsFrom = () => {
         api.post('group-message/create',  data, {headers: { 'content-type': 'multipart/form-data' }})
         .then(res => {
             setMsg('');
+            event.target.reset();
         })
         .catch(err => console.log(err))
     }
@@ -82,8 +86,7 @@ const GroupMsFrom = () => {
             <form className="fromMessager" onSubmit={handleSubmit} ref={formRef} >
                 <input type="hidden" name="group_id" value={groupId}/>
                 <div className="formElement">
-                    <textarea className="zoneMsg" onChange={(ev)=> setMsg(ev.target.value)} name='message' rows="5" resize="false">
-                        {msg}
+                    <textarea className="zoneMsg" onChange={(ev)=> setMsg(ev.target.value)} name='message' rows="5" resize="false" value={msg}>
                     </textarea>
                 </div>
                 <div className="bottomBar">

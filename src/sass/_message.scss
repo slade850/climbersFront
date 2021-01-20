@@ -33,9 +33,9 @@
     padding: 5px;
     width: 60%;
     background-color: orange;
-    margin-left: 0;
-    margin-right: auto;
-    border-bottom-right-radius: 20px;
+    margin-right: O;
+    margin-left: auto;
+    border-bottom-left-radius: 20px;
 }
 
 .messageReceived{
@@ -44,7 +44,7 @@
     padding: 5px;
     width: 60%;
     background-color: $cyan;
-    margin-right: O;
-    margin-left: auto;
-    border-bottom-left-radius: 20px;
+    margin-left: 0;
+    margin-right: auto;
+    border-bottom-right-radius: 20px;
 }

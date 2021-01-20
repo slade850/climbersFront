@@ -28,7 +28,7 @@ const MessagesFrom = () => {
         .finally(() => {
             setMsLoding(true);
         });
-        io.on('nvMs', (data) => {
+        io.on('nvPm', (data) => {
             let {sender, receiver} = data;
             if(sender == user.id || receiver == user.id){
                 dispatch(getTalkFrom(slug))
@@ -37,7 +37,7 @@ const MessagesFrom = () => {
             }
         })
         return () => {
-            return 'by'
+            io.off('nvPm')
         }
     },[]);
     

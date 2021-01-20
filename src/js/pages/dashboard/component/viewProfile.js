@@ -1,14 +1,15 @@
 import React,  {useState, useRef, useEffect}from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import api from '../../../utils/api';
 import config from '../../../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle} from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faEnvelope} from '@fortawesome/free-solid-svg-icons';
 
 const ViewProfile = () => {
 
     let { slug } = useParams();
+    const history = useHistory();
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [errMs, setErrMs] = useState(null);
@@ -45,9 +46,16 @@ const ViewProfile = () => {
             <p className="infoCardLine">Prénom: {user.firstName}</p>
             <p className="infoCardLine">Nom: {user.lastName}</p>
             { 
-            <div className="openPopForm" onClick={() => sendInvit(user.id) }>
+            <div className="splitrow-12">
                 {errMs && <p>{errMs}</p>}
-                <p>demande de contact<FontAwesomeIcon className="popIco" icon={faPlusCircle} /></p>
+                <div className="cols-6" onClick={() => history.push(`/dashboard/messages/${user.slug}`) }>
+                    <p>demande de contact</p>
+                    <FontAwesomeIcon className="popIco" icon={faEnvelope} />
+                </div>
+                <div className="cols-6" onClick={() => sendInvit(user.id) }>
+                    <p>demande de contact</p>
+                    <FontAwesomeIcon className="popIco" icon={faPlusCircle} />
+                </div>
             </div>
             }
             </div>
